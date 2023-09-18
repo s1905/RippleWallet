@@ -1,0 +1,2 @@
+# RippleWallet
+Basic Ripple Wallet
