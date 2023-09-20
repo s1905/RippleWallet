@@ -1,38 +1,25 @@
 import { useContext, useState, useEffect } from "react"
+
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+
 import { UiModeContext } from "./context/UiModeContext"
 import { AuthContext } from "./context/AuthContext"
+
+import SignIn from "./components/SignIn"
 
 function App() {
 
   const { userTheme } = useContext(UiModeContext)
-  const { 
-    currentUser,
-    signIn,  
-    signInWithGooglePopup, 
-    signInWithGoogleRedirect,
-    logOut 
-  } = useContext(AuthContext)
-
-  console.log(currentUser)
 
   return (
-    <div>
-      <h1 className="text-3xl font-bold dark:text-white">
-        Hello world!
-      </h1>
-      <button 
-        className="w-full px-6 py-3 mt-5 text-lg font-bold text-white bg-red-800 rounded-lg sm:w-2/3"
-        onClick={async () => {await signIn('email@gmail.com', 'passuChassu99')}}
-      >
-        SignUp
-      </button>
-
-      <button className="w-full px-6 py-3 text-lg text-white bg-red-800 rounded-lg" 
-        onClick={logOut}
-      >
-        Sign Out
-      </button>
-      
+    <div className="w-screen min-h-screen bg-primary-light dark:bg-primary-dark">
+      <div className="mx-auto sm:max-w-screen sm:max-w-3xl">
+        <BrowserRouter>
+          <Routes>
+            <Route path='/signin' element={ <SignIn /> }></Route>
+          </Routes>
+        </BrowserRouter>
+      </div>
     </div>
   )
 }
