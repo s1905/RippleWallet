@@ -4,13 +4,16 @@ import App from './App.jsx'
 import './index.css'
 
 import { UiModeProvider } from './context/UiModeContext'
+import { AuthProvider } from './context/AuthContext.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <UiModeProvider>
-      <div className='center-main'>
-        <App />
-      </div>
+      <AuthProvider>
+        <div className='center-main'>
+          <App />
+        </div>
+      </AuthProvider>
     </UiModeProvider>
   </React.StrictMode>,
 )
