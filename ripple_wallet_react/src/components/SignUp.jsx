@@ -1,37 +1,39 @@
 import { useState, useEffect, useContext } from "react"
 import { useNavigate } from "react-router-dom"
 
+import google from "../assets/icons/Google.svg"
+import signup from "../assets/signup.svg"
+
 import { AuthContext } from "../context/AuthContext"
 
-import google from "../assets/icons/Google.svg"
-import signin from "../assets/signin.svg"
+const SignUp = () => {
 
-const SignIn = () => {
-    
     const [formData, setFormData] = useState({
+        name : "",
         email : "",
-        password : ""
+        password : "",
+        termsAndCon : ""
     })
 
-    const {
-        currentUser,
-        signIn,  
+    const { 
+        currentUser, 
+        signUp, 
         signInWithGooglePopup, 
         signInWithGoogleRedirect
     } = useContext(AuthContext)
 
     const navigate = useNavigate()
 
+    const navigateSignIn = () => {
+        navigate("/signin")
+    }
+
     const navigateHome = () => {
         navigate("/")
     }
 
-    const navigateSignUp = () => {
-        navigate("/signup")
-    }
-
     useEffect(() => {
-        console.log("SignIn use effect ran...", currentUser)
+        console.log("SignUp use effect ran...", currentUser)
         currentUser ? navigateHome() : console.log("false")
     })
 
@@ -47,9 +49,17 @@ const SignIn = () => {
 
     return (
         <div className="flex flex-col items-center justify-center h-screen p-5">
-            <h1 className="text-3xl font-bold sm:text-2xl dark:text-white">Welcome Back!</h1>
-            <img className="mt-5 w-36 h-36" src={signin} alt="signin-img" />
+            <h1 className="text-3xl font-bold sm:text-2xl dark:text-white">Create Account</h1>
+            <img className="w-48 h-40 mt-5" src={signup} alt="signup-img" />
             <form className="w-full sm:w-2/3">
+                <input
+                    type="text"
+                    placeholder="Name"
+                    onChange={handleChange}
+                    name="name"
+                    value={formData.name}
+                    className="w-full p-3 mt-3 bg-gray-100 rounded"
+                />
                 <input
                     type="email"
                     placeholder="Email"
@@ -66,13 +76,26 @@ const SignIn = () => {
                     value={formData.password}
                     className="w-full p-3 mt-3 bg-gray-100 rounded"
                 />
+                <div className="flex items-center justify-center mt-5">
+                    <input 
+                      type="checkbox" 
+                      id="termsAndCon" 
+                      checked={formData.termsAndCon}
+                      onChange={handleChange}
+                      name="termsAndCon"
+                      className="w-5 h-5 rounded"
+                    />
+                    <label htmlFor="termsAndCon" className="ml-3 text-xs dark:text-white">
+                      I agree to the RipperWallet <span className="text-primary-blue">Terms and Conditions</span>
+                    </label>
+                </div>
             </form>
-            
+
             <button 
               className="w-full px-6 py-3 mt-5 text-lg font-bold text-white rounded-lg bg-primary-blue sm:w-2/3"
-              onClick={async () => {await signIn(formData.email, formData.password)}}
+              onClick={() => signUp(formData.email, formData.password)}
             >
-                Sign In
+              Sign Up
             </button>
 
             <p className="w-full mt-5 mb-5 text-center dark:text-white">OR</p>
@@ -85,18 +108,19 @@ const SignIn = () => {
                     <img className="w-6 h-6" src={google} alt="Google"/>
                 </div>
                 <div className="absolute right-0 flex items-center justify-center w-4/6 h-full">
-                    Sign In with Google
+                    Sign Up with Google
                 </div>
             </button>
 
             <p 
                 className="mt-5 text-center dark:text-white text-s"
             >
-                Don't have an account? 
-                <span className="font-bold text-primary-blue hover:cursor-pointer" onClick={navigateSignUp}> Sign Up </span>
+                Already have an account? 
+                <span className="font-bold text-primary-blue hover:cursor-pointer" onClick={navigateSignIn}> Sign In </span>
             </p>
+
         </div>
     )
 }
 
-export default SignIn
+export default SignUp
