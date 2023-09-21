@@ -91,7 +91,6 @@ export const AuthProvider = ({ children }) => {
         console.log("User signed out!")
     }
 
-
     return (
         <AuthContext.Provider value={{
             currentUser, 
